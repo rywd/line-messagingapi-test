@@ -3,11 +3,10 @@ $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 //ユーザーからのメッセージ取得
 $json_string = file_get_contents('php://input');
 $jsonObj = json_decode($json_string);
-$type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
 //ユーザタイプ取得
-$type = $jsonObj->{"events"}[0]->{"message"}->{"source"}->{"type"};
+$type = $jsonObj->{"events"}[0]->{"source"}->{"type"};
 //ユーザID取得
-$userId = $jsonObj->{"events"}[0]->{"message"}->{"source"}->{"userId"};
+$userId = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
 //ReplyToken取得
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 //返信データ作成
