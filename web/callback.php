@@ -5,14 +5,22 @@ $json_string = file_get_contents('php://input');
 $jsonObj = json_decode($json_string);
 //ユーザタイプ取得
 $type = $jsonObj->{"events"}[0]->{"source"}->{"type"};
-//ユーザID取得
-$userId = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
+if ($type == "group") {
+  //グループID取得
+  $returnId = $jsonObj->{"events"}[0]->{"source"}->{"groupId"};
+} elseif ($type == "room") {
+  //ルームID取得
+  $returnId = $jsonObj->{"events"}[0]->{"source"}->{"roomId"};
+} else {
+  //ユーザID取得
+  $returnId = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
+}
 //ReplyToken取得
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 //返信データ作成
 $response_format_text = [
   "type" => "text",
-  "text" => "type=" . $type . ", userId=" . $userId
+  "text" => "type=" . $type . ", id=" . $returnId
 ];
 $post_data = [
 	"replyToken" => $replyToken,
